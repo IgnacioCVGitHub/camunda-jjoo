@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0lc1b3z" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn:collaboration id="Collaboration_15ocuwi">
+    <bpmn:participant id="ciudad_candidata" name="Ciudad Candidata" processRef="Process_1yxobg9" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1yxobg9" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0tiuf0q</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1r355o9" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0tiuf0q" sourceRef="StartEvent_1" targetRef="clasif_mensaje" />
+    <bpmn:userTask id="clasif_mensaje" name="Clasificar mensaje recibido">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="aceptación_emblema" label="¿Aceptada?" type="boolean" defaultValue="Si" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0tiuf0q</bpmn:incoming>
+      <bpmn:outgoing>Flow_029vh0b</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1atybtc" name="¿Emblema aceptado por el COI?">
+      <bpmn:incoming>Flow_029vh0b</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w1tthy</bpmn:outgoing>
+      <bpmn:outgoing>Flow_17ompn0</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_029vh0b" sourceRef="clasif_mensaje" targetRef="Gateway_1atybtc" />
+    <bpmn:sequenceFlow id="Flow_0w1tthy" name="Si" sourceRef="Gateway_1atybtc" targetRef="publicar_emblema">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$(aceptación_emblema)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:task id="publicar_emblema" name="Publicar emblema">
+      <bpmn:incoming>Flow_0w1tthy</bpmn:incoming>
+      <bpmn:outgoing>Flow_0saa7kk</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_01fysxz" name="Fin">
+      <bpmn:incoming>Flow_17ompn0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_17ompn0" name="No" sourceRef="Gateway_1atybtc" targetRef="Event_01fysxz">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$(aceptación_emblema)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1erssne" name="Emblema creado y publicado con éxito">
+      <bpmn:incoming>Flow_0saa7kk</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0saa7kk" sourceRef="publicar_emblema" targetRef="Event_1erssne" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_15ocuwi">
+      <bpmndi:BPMNShape id="Participant_0xqld86_di" bpmnElement="ciudad_candidata" isHorizontal="true">
+        <dc:Bounds x="129" y="52" width="699" height="316" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0tiuf0q_di" bpmnElement="Flow_0tiuf0q">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_029vh0b_di" bpmnElement="Flow_029vh0b">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="425" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w1tthy_di" bpmnElement="Flow_0w1tthy">
+        <di:waypoint x="450" y="152" />
+        <di:waypoint x="450" y="110" />
+        <di:waypoint x="530" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="460" y="128" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17ompn0_di" bpmnElement="Flow_17ompn0">
+        <di:waypoint x="450" y="202" />
+        <di:waypoint x="450" y="290" />
+        <di:waypoint x="532" y="290" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="458" y="243" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0saa7kk_di" bpmnElement="Flow_0saa7kk">
+        <di:waypoint x="630" y="110" />
+        <di:waypoint x="692" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0w5k6lc_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1x8oc9f_di" bpmnElement="clasif_mensaje">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1atybtc_di" bpmnElement="Gateway_1atybtc" isMarkerVisible="true">
+        <dc:Bounds x="425" y="152" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="493" y="167" width="77" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04ounxk_di" bpmnElement="publicar_emblema">
+        <dc:Bounds x="530" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01fysxz_di" bpmnElement="Event_01fysxz">
+        <dc:Bounds x="532" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="542" y="315" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1erssne_di" bpmnElement="Event_1erssne">
+        <dc:Bounds x="692" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="669" y="135" width="84" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
