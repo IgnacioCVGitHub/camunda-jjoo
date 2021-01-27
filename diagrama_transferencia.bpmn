@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0e0e0kc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="transferencia-banco" name="Transferencia Tasa Participación" isExecutable="true">
+    <bpmn:startEvent id="Event_1hsif4v" name="Procedimientos Frimados">
+      <bpmn:outgoing>Flow_1vybjyv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1vybjyv" sourceRef="Event_1hsif4v" targetRef="Activity_192tepi" />
+    <bpmn:userTask id="Activity_192tepi" name="Rellenar formulario transferencia" camunda:assignee="demo" camunda:candidateGroups="ciudadcandidata">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="numerocuenta" label="Numero de Cuenta Bancaria " type="long" />
+          <camunda:formField id="asunto" label="Asunto Transferencia" type="string" />
+          <camunda:formField id="cantidad" label="Cantidad a transefrir" type="long" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vybjyv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0r97s4y</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0r97s4y" sourceRef="Activity_192tepi" targetRef="Activity_1vex50f" />
+    <bpmn:serviceTask id="Activity_1vex50f" name="Realizar transferencia" camunda:type="external" camunda:topic="coi-transfer">
+      <bpmn:incoming>Flow_0r97s4y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gw62zp</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_06xysdo" name="Transferencia realizada">
+      <bpmn:incoming>Flow_1gw62zp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1gw62zp" sourceRef="Activity_1vex50f" targetRef="Event_06xysdo" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="transferencia-banco">
+      <bpmndi:BPMNEdge id="Flow_1vybjyv_di" bpmnElement="Flow_1vybjyv">
+        <di:waypoint x="208" y="120" />
+        <di:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0r97s4y_di" bpmnElement="Flow_0r97s4y">
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="420" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gw62zp_di" bpmnElement="Flow_1gw62zp">
+        <di:waypoint x="520" y="120" />
+        <di:waypoint x="582" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1hsif4v_di" bpmnElement="Event_1hsif4v">
+        <dc:Bounds x="172" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="153" y="145" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0a4lpb3_di" bpmnElement="Activity_192tepi">
+        <dc:Bounds x="260" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hw2fbd_di" bpmnElement="Activity_1vex50f">
+        <dc:Bounds x="420" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06xysdo_di" bpmnElement="Event_06xysdo">
+        <dc:Bounds x="582" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="566" y="145" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

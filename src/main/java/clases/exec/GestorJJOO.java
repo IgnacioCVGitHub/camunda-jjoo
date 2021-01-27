@@ -16,16 +16,17 @@ public class GestorJJOO {
 	        .build();
 
 	    // subscribe to an external task topic as specified in the process
-	    client.subscribe("charge-card")
+	    client.subscribe("coi-transfer")
 	        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
 	        .handler((externalTask, externalTaskService) -> {
 	          // Put your business logic here
 
 	          // Get a process variable
-	          String item = (String) externalTask.getVariable("item");
-	          Long amount = (Long) externalTask.getVariable("amount");
+	        	Long cuenta = (Long) externalTask.getVariable("numerocuenta");
+	          String asunto = (String) externalTask.getVariable("asunto");
+	          Long cantidad = (Long) externalTask.getVariable("cantidad");
 
-	          LOGGER.info("Charging credit card with an amount of '" + amount + "'€ for the item '" + item + "'...");
+	          LOGGER.info("Realizando transferencia a la cuenta" + cuenta + " con asunto " + asunto + " por valor de " + cantidad+ "€ ...");
 
 	          try {
 	              Desktop.getDesktop().browse(new URI("https://docs.camunda.org/get-started/quick-start/complete"));
