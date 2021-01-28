@@ -23,14 +23,14 @@
     <bpmn:userTask id="Activity_1jgxozj" name="Organizar cita con Ciudad Candidata">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="fecha-cita" type="" />
+          <camunda:formField id="fecha-cita" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1jj4rp5</bpmn:incoming>
       <bpmn:outgoing>Flow_0yt3bkx</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0yt3bkx" sourceRef="Activity_1jgxozj" targetRef="Activity_04hu9nj" />
-    <bpmn:sendTask id="Activity_04hu9nj" name="Notificar fecha cita" camunda:type="external" camunda:topic="">
+    <bpmn:sendTask id="Activity_04hu9nj" name="Notificar fecha cita" camunda:type="external" camunda:topic="notify-date">
       <bpmn:incoming>Flow_0yt3bkx</bpmn:incoming>
       <bpmn:outgoing>Flow_0oefdjd</bpmn:outgoing>
     </bpmn:sendTask>
