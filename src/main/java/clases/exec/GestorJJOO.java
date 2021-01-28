@@ -200,7 +200,12 @@ public class GestorJJOO {
             		+ "Por favor realicen de nuevo el emblema."; 
 
 	          try {
-				sendMail.sendMail(mail, user, asunto, cuerpo);
+	        	if(mail.contains("@gmail.com")) {
+	        			sendMail.sendMail(mail, user, asunto, cuerpo);
+	        	}else {
+	        		LOGGER.warning("EL correo no termina en \"@gmail.com\", Correo no enviado. Error");
+	        	}
+				
 			} catch (Exception e) {
 				LOGGER.warning("Correo no enviado. Error");
 			}   
