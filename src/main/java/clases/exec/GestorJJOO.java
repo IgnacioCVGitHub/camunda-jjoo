@@ -106,7 +106,7 @@ public class GestorJJOO {
         })
         .open();
 
-client.subscribe("envio_doc_firmada_garantías")
+	    client.subscribe("envio_doc_firmada_garantías")
         .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
         .handler((externalTask, externalTaskService) -> {
           // Put your business logic here
@@ -131,7 +131,7 @@ client.subscribe("envio_doc_firmada_garantías")
         })
         .open();
 
-client.subscribe("notificacion_evaluacion_negativa")
+	    client.subscribe("notificacion_evaluacion_negativa")
         .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
         .handler((externalTask, externalTaskService) -> {
           // Put your business logic here
@@ -156,7 +156,7 @@ client.subscribe("notificacion_evaluacion_negativa")
         })
         .open();
 
-client.subscribe("notificacion_evaluacion_positiva")
+	    client.subscribe("notificacion_evaluacion_positiva")
         .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
         .handler((externalTask, externalTaskService) -> {
           // Put your business logic here
@@ -180,5 +180,19 @@ client.subscribe("notificacion_evaluacion_positiva")
           externalTaskService.complete(externalTask);
         })
         .open();
+
+		client.subscribe("publicar_emblema")
+		.lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+		.handler((externalTask, externalTaskService) -> {
+		  // Put your business logic here
+		
+		  // Get a process variable
+		  LOGGER.info("Realizando la publicación de el emblema en las redes sociales y en la página de noticias oficial del comité Olimpico Nacional");
+		  LOGGER.info("Publicación realizada");     
+		
+		  // Complete the task
+		  externalTaskService.complete(externalTask);
+		})
+		.open();
 	  }
 }

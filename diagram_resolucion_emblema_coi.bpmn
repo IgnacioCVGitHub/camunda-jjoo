@@ -3,16 +3,16 @@
   <bpmn:collaboration id="Collaboration_15ocuwi">
     <bpmn:participant id="ciudad_candidata" name="Ciudad Candidata" processRef="Process_1yxobg9" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1yxobg9" isExecutable="true">
+  <bpmn:process id="Process_1yxobg9" name="resolucion_emblema" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0tiuf0q</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1r355o9" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0tiuf0q" sourceRef="StartEvent_1" targetRef="clasif_mensaje" />
-    <bpmn:userTask id="clasif_mensaje" name="Clasificar mensaje recibido">
+    <bpmn:userTask id="clasif_mensaje" name="Clasificar mensaje recibido" camunda:assignee="demo" camunda:candidateUsers="demo,ciudadcandidata">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="aceptación_emblema" label="¿Aceptada?" type="boolean" defaultValue="Si" />
+          <camunda:formField id="aceptación_emblema" label="¿Aceptada?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0tiuf0q</bpmn:incoming>
@@ -25,43 +25,31 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_029vh0b" sourceRef="clasif_mensaje" targetRef="Gateway_1atybtc" />
     <bpmn:sequenceFlow id="Flow_0w1tthy" name="Si" sourceRef="Gateway_1atybtc" targetRef="publicar_emblema">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$(aceptación_emblema)</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aceptación_emblema}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:task id="publicar_emblema" name="Publicar emblema">
-      <bpmn:incoming>Flow_0w1tthy</bpmn:incoming>
-      <bpmn:outgoing>Flow_0saa7kk</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:endEvent id="Event_01fysxz" name="Fin">
       <bpmn:incoming>Flow_17ompn0</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_17ompn0" name="No" sourceRef="Gateway_1atybtc" targetRef="Event_01fysxz">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$(aceptación_emblema)</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!aceptación_emblema}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1erssne" name="Emblema creado y publicado con éxito">
       <bpmn:incoming>Flow_0saa7kk</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0saa7kk" sourceRef="publicar_emblema" targetRef="Event_1erssne" />
+    <bpmn:serviceTask id="publicar_emblema" name="Publicar emblema" camunda:type="external" camunda:topic="publicar_emblema">
+      <bpmn:incoming>Flow_0w1tthy</bpmn:incoming>
+      <bpmn:outgoing>Flow_0saa7kk</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_15ocuwi">
       <bpmndi:BPMNShape id="Participant_0xqld86_di" bpmnElement="ciudad_candidata" isHorizontal="true">
         <dc:Bounds x="129" y="52" width="699" height="316" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0tiuf0q_di" bpmnElement="Flow_0tiuf0q">
-        <di:waypoint x="215" y="177" />
-        <di:waypoint x="270" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_029vh0b_di" bpmnElement="Flow_029vh0b">
-        <di:waypoint x="370" y="177" />
-        <di:waypoint x="425" y="177" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0w1tthy_di" bpmnElement="Flow_0w1tthy">
-        <di:waypoint x="450" y="152" />
-        <di:waypoint x="450" y="110" />
-        <di:waypoint x="530" y="110" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="460" y="128" width="11" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="Flow_0saa7kk_di" bpmnElement="Flow_0saa7kk">
+        <di:waypoint x="630" y="110" />
+        <di:waypoint x="692" y="110" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_17ompn0_di" bpmnElement="Flow_17ompn0">
         <di:waypoint x="450" y="202" />
@@ -71,9 +59,21 @@
           <dc:Bounds x="458" y="243" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0saa7kk_di" bpmnElement="Flow_0saa7kk">
-        <di:waypoint x="630" y="110" />
-        <di:waypoint x="692" y="110" />
+      <bpmndi:BPMNEdge id="Flow_0w1tthy_di" bpmnElement="Flow_0w1tthy">
+        <di:waypoint x="450" y="152" />
+        <di:waypoint x="450" y="110" />
+        <di:waypoint x="530" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="460" y="128" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_029vh0b_di" bpmnElement="Flow_029vh0b">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="425" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tiuf0q_di" bpmnElement="Flow_0tiuf0q">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0w5k6lc_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
@@ -87,9 +87,6 @@
           <dc:Bounds x="493" y="167" width="77" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_04ounxk_di" bpmnElement="publicar_emblema">
-        <dc:Bounds x="530" y="70" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_01fysxz_di" bpmnElement="Event_01fysxz">
         <dc:Bounds x="532" y="272" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -101,6 +98,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="669" y="135" width="84" height="40" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x7iwnw_di" bpmnElement="publicar_emblema">
+        <dc:Bounds x="530" y="70" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -3,18 +3,18 @@
   <bpmn:collaboration id="Collaboration_1telwmy">
     <bpmn:participant id="coi" name="Comité Olímpico Internacional" processRef="evaluacion_emblema" />
   </bpmn:collaboration>
-  <bpmn:process id="evaluacion_emblema" isExecutable="true">
+  <bpmn:process id="evaluacion_emblema" name="evaluacion_emblema" isExecutable="true">
     <bpmn:sequenceFlow id="f003" name="No" sourceRef="g001" targetRef="envio_negativo">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$(Requisitos)</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!Requisitos}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:startEvent id="StartEvent_1">
+    <bpmn:startEvent id="StartEvent_1" name="Recibo de emblema">
       <bpmn:outgoing>Flow_1vfzvb4</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_02yp9uq" />
     </bpmn:startEvent>
-    <bpmn:userTask id="evaluar_emblema" name="Evaluar emblema" camunda:formKey="f001" camunda:candidateUsers="demo, coi">
+    <bpmn:userTask id="evaluar_emblema" name="Evaluar emblema" camunda:formKey="f001" camunda:assignee="demo" camunda:candidateUsers="demo, comiteolimpicointernacional">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="form_ev_emblema" label="Requisitos" type="boolean" defaultValue="No" />
+          <camunda:formField id="form_ev_emblema" label="Requisitos" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1vfzvb4</bpmn:incoming>
@@ -28,45 +28,37 @@
     <bpmn:sequenceFlow id="Flow_1vfzvb4" sourceRef="StartEvent_1" targetRef="evaluar_emblema" />
     <bpmn:sequenceFlow id="Flow_0m4ais3" sourceRef="evaluar_emblema" targetRef="g001" />
     <bpmn:sequenceFlow id="f002" name="Si" sourceRef="g001" targetRef="envio_positivo">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$(Requisitos)</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${Requisitos}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sendTask id="envio_negativo" name="Notificar descarte">
+    <bpmn:sendTask id="envio_negativo" name="Notificar descarte" camunda:type="external" camunda:topic="notificacion_evaluacion_positiva">
       <bpmn:incoming>f003</bpmn:incoming>
       <bpmn:outgoing>Flow_1juxlfr</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sendTask id="envio_positivo" name="Notificar aprobación">
+    <bpmn:sendTask id="envio_positivo" name="Notificar aprobación" camunda:type="external" camunda:topic="notificacion_evaluacion_negativa">
       <bpmn:incoming>f002</bpmn:incoming>
       <bpmn:outgoing>Flow_1rs95hh</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:intermediateThrowEvent id="Event_1ge9tkd" name="Fin de la evaluación">
-      <bpmn:incoming>Flow_1rs95hh</bpmn:incoming>
-    </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_1rs95hh" sourceRef="envio_positivo" targetRef="Event_1ge9tkd" />
-    <bpmn:intermediateThrowEvent id="Event_1x0pzrl" name="Fin de la evaluación">
-      <bpmn:incoming>Flow_1juxlfr</bpmn:incoming>
-    </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="Flow_1juxlfr" sourceRef="envio_negativo" targetRef="Event_1x0pzrl" />
+    <bpmn:endEvent id="Event_1x0pzrl" name="Fin de la evaluación">
+      <bpmn:incoming>Flow_1juxlfr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_1ge9tkd" name="Fin de la evaluación">
+      <bpmn:incoming>Flow_1rs95hh</bpmn:incoming>
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1telwmy">
       <bpmndi:BPMNShape id="Participant_1hdi427_di" bpmnElement="coi" isHorizontal="true">
         <dc:Bounds x="129" y="52" width="861" height="338" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1ejhg8d_di" bpmnElement="f003">
-        <di:waypoint x="450" y="195" />
-        <di:waypoint x="450" y="130" />
-        <di:waypoint x="530" y="130" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="458" y="160" width="15" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="Flow_1juxlfr_di" bpmnElement="Flow_1juxlfr">
+        <di:waypoint x="630" y="130" />
+        <di:waypoint x="692" y="130" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1vfzvb4_di" bpmnElement="Flow_1vfzvb4">
-        <di:waypoint x="215" y="220" />
-        <di:waypoint x="270" y="220" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0m4ais3_di" bpmnElement="Flow_0m4ais3">
-        <di:waypoint x="370" y="220" />
-        <di:waypoint x="425" y="220" />
+      <bpmndi:BPMNEdge id="Flow_1rs95hh_di" bpmnElement="Flow_1rs95hh">
+        <di:waypoint x="630" y="320" />
+        <di:waypoint x="692" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10x5fp5_di" bpmnElement="f002">
         <di:waypoint x="450" y="245" />
@@ -76,16 +68,27 @@
           <dc:Bounds x="460" y="280" width="11" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1rs95hh_di" bpmnElement="Flow_1rs95hh">
-        <di:waypoint x="630" y="320" />
-        <di:waypoint x="692" y="320" />
+      <bpmndi:BPMNEdge id="Flow_0m4ais3_di" bpmnElement="Flow_0m4ais3">
+        <di:waypoint x="370" y="220" />
+        <di:waypoint x="425" y="220" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1juxlfr_di" bpmnElement="Flow_1juxlfr">
-        <di:waypoint x="630" y="130" />
-        <di:waypoint x="692" y="130" />
+      <bpmndi:BPMNEdge id="Flow_1vfzvb4_di" bpmnElement="Flow_1vfzvb4">
+        <di:waypoint x="215" y="220" />
+        <di:waypoint x="270" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ejhg8d_di" bpmnElement="f003">
+        <di:waypoint x="450" y="195" />
+        <di:waypoint x="450" y="130" />
+        <di:waypoint x="530" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="458" y="160" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0kqbq8n_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="173" y="245" width="50" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1af9loa_di" bpmnElement="evaluar_emblema">
         <dc:Bounds x="270" y="180" width="100" height="80" />
@@ -102,16 +105,16 @@
       <bpmndi:BPMNShape id="Activity_0bivoji_di" bpmnElement="envio_positivo">
         <dc:Bounds x="530" y="280" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1ge9tkd_di" bpmnElement="Event_1ge9tkd">
-        <dc:Bounds x="692" y="302" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="685" y="345" width="53" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1x0pzrl_di" bpmnElement="Event_1x0pzrl">
+      <bpmndi:BPMNShape id="Event_0o7nojn_di" bpmnElement="Event_1x0pzrl">
         <dc:Bounds x="692" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="684" y="155" width="53" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0iuiqim_di" bpmnElement="Event_1ge9tkd">
+        <dc:Bounds x="692" y="302" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="685" y="345" width="53" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
