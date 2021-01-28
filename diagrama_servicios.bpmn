@@ -20,33 +20,14 @@
       <bpmn:outgoing>Flow_1jj4rp5</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1jj4rp5" sourceRef="Activity_1bxrx68" targetRef="Activity_1jgxozj" />
-    <bpmn:userTask id="Activity_1jgxozj" name="Organizar cita con Ciudad Candidata" camunda:assignee="demo" camunda:candidateGroups="comiteolimpicointernacional">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="fecha-cita" label="Fecha de la cita acordada" type="string">
-            <camunda:validation>
-              <camunda:constraint name="minlength" config="5" />
-              <camunda:constraint name="maxlength" config="8" />
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1jj4rp5</bpmn:incoming>
-      <bpmn:outgoing>Flow_0yt3bkx</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0yt3bkx" sourceRef="Activity_1jgxozj" targetRef="Activity_04hu9nj" />
-    <bpmn:sendTask id="Activity_04hu9nj" name="Notificar fecha cita" camunda:type="external" camunda:topic="notify-date">
-      <bpmn:incoming>Flow_0yt3bkx</bpmn:incoming>
-      <bpmn:outgoing>Flow_0oefdjd</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_0oefdjd" sourceRef="Activity_04hu9nj" targetRef="Activity_0z4lfk6" />
+    <bpmn:sequenceFlow id="Flow_0yt3bkx" sourceRef="Activity_1jgxozj" targetRef="Activity_0z4lfk6" />
     <bpmn:userTask id="Activity_0z4lfk6" name="Evaluar Candidatura" camunda:assignee="demo" camunda:candidateGroups="comiteolimpicointernacional">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="aceptable" label="Candidatura aceptable" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0oefdjd</bpmn:incoming>
+      <bpmn:incoming>Flow_0yt3bkx</bpmn:incoming>
       <bpmn:outgoing>Flow_13h8d3s</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="Gateway_0aj7emi" name="¿Se cumplen los requisitos?">
@@ -78,6 +59,10 @@
       <bpmn:incoming>Flow_1ez1e1h</bpmn:incoming>
       <bpmn:outgoing>Flow_03s1nhd</bpmn:outgoing>
     </bpmn:sendTask>
+    <bpmn:manualTask id="Activity_1jgxozj" name="Organizar cita con Ciudad Candidata">
+      <bpmn:incoming>Flow_1jj4rp5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yt3bkx</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="gestion-servicios">
@@ -109,17 +94,13 @@
         <di:waypoint x="1050" y="217" />
         <di:waypoint x="1085" y="217" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0oefdjd_di" bpmnElement="Flow_0oefdjd">
-        <di:waypoint x="920" y="217" />
-        <di:waypoint x="950" y="217" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yt3bkx_di" bpmnElement="Flow_0yt3bkx">
-        <di:waypoint x="790" y="217" />
-        <di:waypoint x="820" y="217" />
+        <di:waypoint x="890" y="217" />
+        <di:waypoint x="950" y="217" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jj4rp5_di" bpmnElement="Flow_1jj4rp5">
         <di:waypoint x="660" y="217" />
-        <di:waypoint x="690" y="217" />
+        <di:waypoint x="790" y="217" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1v5yf0a_di" bpmnElement="Flow_1v5yf0a">
         <di:waypoint x="530" y="217" />
@@ -148,12 +129,6 @@
       <bpmndi:BPMNShape id="Activity_1qh9paw_di" bpmnElement="Activity_1bxrx68">
         <dc:Bounds x="560" y="177" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_025i3zt_di" bpmnElement="Activity_1jgxozj">
-        <dc:Bounds x="690" y="177" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1dixeuh_di" bpmnElement="Activity_04hu9nj">
-        <dc:Bounds x="820" y="177" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1n1yf9x_di" bpmnElement="Activity_0z4lfk6">
         <dc:Bounds x="950" y="177" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -180,6 +155,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1eihwkj_di" bpmnElement="Activity_0uwl1dh">
         <dc:Bounds x="1160" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16ej6r5_di" bpmnElement="Activity_1jgxozj">
+        <dc:Bounds x="790" y="177" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
