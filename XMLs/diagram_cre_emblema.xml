@@ -30,7 +30,7 @@
     <bpmn:userTask id="Activity_0rqrvyj" name="Evaluar Candidatura" camunda:assignee="demo" camunda:candidateGroups="comiteolimpionacional">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="aprobada" label="¿La candidatura es conveniente?" type="boolean" />
+          <camunda:formField id="aprobada" label="La candidatura es conveniente" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0pkf1ra</bpmn:incoming>
