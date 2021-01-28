@@ -10,7 +10,7 @@ public class SendMail {
 	
 	private static final String HOST = "smtp.gmail.com";
 	private static final String USER = "camunda.jjoo@gmail.com";
-	private static final String PWD = "klhwfosynivajtxp";
+	private static final String PWD = "camundapass";
 	private static final int PORT = 465;
 	
 	public void sendMail(String mail, String user, String asunto, String cuerpo) {

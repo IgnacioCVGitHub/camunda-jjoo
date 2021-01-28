@@ -25,7 +25,6 @@
         <camunda:formData>
           <camunda:formField id="fecha-cita" label="Fecha de la cita acordada" type="string">
             <camunda:validation>
-              <camunda:constraint name="required" />
               <camunda:constraint name="minlength" config="5" />
               <camunda:constraint name="maxlength" config="8" />
             </camunda:validation>

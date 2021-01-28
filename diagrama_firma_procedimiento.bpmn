@@ -3,7 +3,7 @@
   <bpmn:process id="firma-proc-cand" name="Firma de procedimientos de candidatura" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Procedimiento Candidatura Recibido">
       <bpmn:outgoing>Flow_0pkf1ra</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_03fd5bm" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_03fd5bm" messageRef="Message_0q8luw9" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0pkf1ra" sourceRef="StartEvent_1" targetRef="Activity_0rqrvyj" />
     <bpmn:userTask id="Activity_0rqrvyj" name="Evaluar Candidatura" camunda:candidateGroups="comiteolimpionacional">
@@ -79,6 +79,7 @@
       <bpmn:outgoing>Flow_0j1vjy4</bpmn:outgoing>
     </bpmn:manualTask>
   </bpmn:process>
+  <bpmn:message id="Message_0q8luw9" name="procedimiento candidatura enviado" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="firma-proc-cand">
       <bpmndi:BPMNEdge id="Flow_0pkf1ra_di" bpmnElement="Flow_0pkf1ra">

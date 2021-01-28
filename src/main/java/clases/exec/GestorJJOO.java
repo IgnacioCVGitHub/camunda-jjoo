@@ -72,12 +72,13 @@ public class GestorJJOO {
         	List rules = Arrays.asList(new CharacterRule(EnglishCharacterData.UpperCase, 1),
     				new CharacterRule(EnglishCharacterData.LowerCase, 1), new CharacterRule(EnglishCharacterData.Digit, 1),new CharacterRule(EnglishCharacterData.Special, 1));
         	
-        	LOGGER.info("generando contraseña para el usuario" + user +" ...");
+        	LOGGER.info("generando contraseña para el usuario " + user +" ...");
 
     		PasswordGenerator generator = new PasswordGenerator();
         	String passwd= generator.generatePassword(8, rules);
         	
         	LOGGER.info("contraseña generada: " + user +" - "+passwd);
+        	externalTaskService.complete(externalTask);
         })
         .open();
 	    
