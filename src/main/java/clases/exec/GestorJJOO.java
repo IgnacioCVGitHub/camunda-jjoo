@@ -1,10 +1,13 @@
 package clases.exec;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 import java.awt.Desktop;
 import java.net.URI;
 
 import org.camunda.bpm.client.ExternalTaskClient;
+import org.passay.*;
 
 public class GestorJJOO {
 	private final static Logger LOGGER = Logger.getLogger(GestorJJOO.class.getName());
@@ -59,5 +62,23 @@ public class GestorJJOO {
         })
         .open();
 	    	
+	    
+	    client.subscribe("grant-access")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+        	String user = (String) externalTask.getVariable("user");
+        	
+        	//generación de contraseña para dar acceso a PCGJJOO
+        	List rules = Arrays.asList(new CharacterRule(EnglishCharacterData.UpperCase, 1),
+    				new CharacterRule(EnglishCharacterData.LowerCase, 1), new CharacterRule(EnglishCharacterData.Digit, 1),new CharacterRule(EnglishCharacterData.Special, 1));
+        	
+        	LOGGER.info("generando contraseña para el usuario" + user +" ...");
+
+    		PasswordGenerator generator = new PasswordGenerator();
+        	String passwd= generator.generatePassword(8, rules);
+        	
+        	LOGGER.info("contraseña generada: " + user +" - "+passwd);
+        })
+        .open();
 	  }
 }
