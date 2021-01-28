@@ -51,7 +51,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1telwmy">
       <bpmndi:BPMNShape id="Participant_1hdi427_di" bpmnElement="coi" isHorizontal="true">
-        <dc:Bounds x="129" y="52" width="861" height="338" />
+        <dc:Bounds x="129" y="52" width="691" height="338" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1juxlfr_di" bpmnElement="Flow_1juxlfr">
         <di:waypoint x="630" y="130" />
