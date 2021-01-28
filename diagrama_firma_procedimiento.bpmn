@@ -6,7 +6,7 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_03fd5bm" messageRef="Message_0q8luw9" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0pkf1ra" sourceRef="StartEvent_1" targetRef="Activity_0rqrvyj" />
-    <bpmn:userTask id="Activity_0rqrvyj" name="Evaluar Candidatura" camunda:candidateGroups="comiteolimpionacional">
+    <bpmn:userTask id="Activity_0rqrvyj" name="Evaluar Candidatura" camunda:assignee="demo" camunda:candidateGroups="comiteolimpionacional">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="aprobada" label="La candidatura es conveniente" type="boolean" />
