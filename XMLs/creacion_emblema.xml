@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_06vdvbr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn:collaboration id="Collaboration_10nxlf4">
+    <bpmn:participant id="Participant_03w368f" name="Pais" processRef="Creacion_emblema" />
+  </bpmn:collaboration>
+  <bpmn:process id="Creacion_emblema" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0p6ee0g">
+      <bpmn:lane id="Lane_1ooxikj" name="Comite Olímpico Nacional">
+        <bpmn:flowNodeRef>Activity_0zcikm8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1q3fu1d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_074hhpr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_00s6h1h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0ynaqqg</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0x1xm1n" name="Ciudad candidata">
+        <bpmn:flowNodeRef>Activity_1yak80a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1mgp0fk</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:manualTask id="Activity_1yak80a" name="Crear emblema">
+      <bpmn:incoming>Flow_01729os</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tzmkj2</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:userTask id="Activity_0zcikm8" name="Evaluar emblema" camunda:assignee="demo" camunda:candidateGroups="comiteolimpiconacional">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="request" label="¿Cumple los requisitos?" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1tzmkj2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1elbwqk</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1q3fu1d" name="¿Cumple los requisitos?">
+      <bpmn:incoming>Flow_1elbwqk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fnnevf</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tfxioa</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="Activity_074hhpr" name="Enviar al COI el emblema" camunda:type="external" camunda:topic="envio_emblema_coi">
+      <bpmn:incoming>Flow_0tfxioa</bpmn:incoming>
+      <bpmn:outgoing>Flow_00giizw</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_00s6h1h" name="FIn">
+      <bpmn:incoming>Flow_00giizw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_0ynaqqg" name="Fin">
+      <bpmn:incoming>Flow_0fnnevf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Event_1mgp0fk" name="creacion emblema">
+      <bpmn:outgoing>Flow_01729os</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1tzmkj2" sourceRef="Activity_1yak80a" targetRef="Activity_0zcikm8" />
+    <bpmn:sequenceFlow id="Flow_1elbwqk" sourceRef="Activity_0zcikm8" targetRef="Gateway_1q3fu1d" />
+    <bpmn:sequenceFlow id="Flow_0fnnevf" name="No" sourceRef="Gateway_1q3fu1d" targetRef="Event_0ynaqqg">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!request}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0tfxioa" name="Si" sourceRef="Gateway_1q3fu1d" targetRef="Activity_074hhpr">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${request}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_00giizw" sourceRef="Activity_074hhpr" targetRef="Event_00s6h1h" />
+    <bpmn:sequenceFlow id="Flow_01729os" sourceRef="Event_1mgp0fk" targetRef="Activity_1yak80a" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_10nxlf4">
+      <bpmndi:BPMNShape id="Participant_03w368f_di" bpmnElement="Participant_03w368f" isHorizontal="true">
+        <dc:Bounds x="129" y="40" width="670" height="380" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0x1xm1n_di" bpmnElement="Lane_0x1xm1n" isHorizontal="true">
+        <dc:Bounds x="159" y="240" width="640" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1ooxikj_di" bpmnElement="Lane_1ooxikj" isHorizontal="true">
+        <dc:Bounds x="159" y="40" width="640" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_01729os_di" bpmnElement="Flow_01729os">
+        <di:waypoint x="227" y="340" />
+        <di:waypoint x="269" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00giizw_di" bpmnElement="Flow_00giizw">
+        <di:waypoint x="649" y="180" />
+        <di:waypoint x="711" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tfxioa_di" bpmnElement="Flow_0tfxioa">
+        <di:waypoint x="449" y="155" />
+        <di:waypoint x="449" y="180" />
+        <di:waypoint x="549" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="415" y="138" width="10" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fnnevf_di" bpmnElement="Flow_0fnnevf">
+        <di:waypoint x="449" y="105" />
+        <di:waypoint x="449" y="80" />
+        <di:waypoint x="711" y="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="431" y="86" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1elbwqk_di" bpmnElement="Flow_1elbwqk">
+        <di:waypoint x="369" y="130" />
+        <di:waypoint x="424" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tzmkj2_di" bpmnElement="Flow_1tzmkj2">
+        <di:waypoint x="319" y="300" />
+        <di:waypoint x="319" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1yak80a_di" bpmnElement="Activity_1yak80a">
+        <dc:Bounds x="269" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zcikm8_di" bpmnElement="Activity_0zcikm8">
+        <dc:Bounds x="269" y="90" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1q3fu1d_di" bpmnElement="Gateway_1q3fu1d" isMarkerVisible="true">
+        <dc:Bounds x="424" y="105" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="499" y="120" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_074hhpr_di" bpmnElement="Activity_074hhpr">
+        <dc:Bounds x="549" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00s6h1h_di" bpmnElement="Event_00s6h1h">
+        <dc:Bounds x="711" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="721" y="205" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ynaqqg_di" bpmnElement="Event_0ynaqqg">
+        <dc:Bounds x="711" y="62" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="721" y="105" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mgp0fk_di" bpmnElement="Event_1mgp0fk">
+        <dc:Bounds x="191" y="322" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="187" y="365" width="46" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
