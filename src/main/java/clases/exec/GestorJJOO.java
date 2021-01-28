@@ -27,16 +27,12 @@ public class GestorJJOO {
 	          Long cantidad = (Long) externalTask.getVariable("cantidad");
 
 	          LOGGER.info("Realizando transferencia a la cuenta" + cuenta + " con asunto " + asunto + " por valor de " + cantidad+ "€ ...");
-
-	          try {
-	              Desktop.getDesktop().browse(new URI("https://docs.camunda.org/get-started/quick-start/complete"));
-	          } catch (Exception e) {
-	              e.printStackTrace();
-	          }
+	          LOGGER.info("Transferencia realizada");     
 
 	          // Complete the task
 	          externalTaskService.complete(externalTask);
 	        })
 	        .open();
+	    	
 	  }
 }
