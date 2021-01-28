@@ -9,8 +9,8 @@ public class SendMail {
 	final static Logger LOGGER = Logger.getLogger(SendMail.class.getName());
 	
 	private static final String HOST = "smtp.gmail.com";
-	private static final String USER = "camunda.jjoo@gmail.com";
-	private static final String PWD = "camundapass";
+	private static final String USER = "camundamail.jjoo@gmail.com";
+	private static final String PWD = "fmpghoqrcavekpyy";
 	private static final int PORT = 465;
 	
 	public void sendMail(String mail, String user, String asunto, String cuerpo) {
