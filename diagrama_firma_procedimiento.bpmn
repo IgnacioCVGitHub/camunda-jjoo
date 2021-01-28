@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1d9mjw2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
-  <bpmn:process id="Process_08aj1l4" isExecutable="true">
+  <bpmn:process id="firma-proc-cand" name="Firma de procedimientos de candidatura" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Procedimiento Candidatura Recibido">
       <bpmn:outgoing>Flow_0pkf1ra</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_03fd5bm" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_03fd5bm" messageRef="Message_0q8luw9" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0pkf1ra" sourceRef="StartEvent_1" targetRef="Activity_0rqrvyj" />
     <bpmn:userTask id="Activity_0rqrvyj" name="Evaluar Candidatura" camunda:candidateGroups="comiteolimpionacional">
@@ -29,27 +29,59 @@
       <bpmn:terminateEventDefinition id="TerminateEventDefinition_0ovefmf" />
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1l3dc4e" name="Sí" sourceRef="Gateway_0h04w2w" targetRef="Activity_0h4arwx" />
-    <bpmn:sendTask id="Activity_0h4arwx" name="Enviar Documento" camunda:type="external" camunda:topic="send-compromiso">
+    <bpmn:sequenceFlow id="Flow_1rygpxd" sourceRef="Activity_0h4arwx" targetRef="Activity_0mrwle5" />
+    <bpmn:userTask id="Activity_0mrwle5" name="Firmar Documentación" camunda:assignee="demo" camunda:candidateGroups="comitepujas">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="nombre" type="string" />
+          <camunda:formField id="DNI" type="long" />
+          <camunda:formField id="conformidad" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rygpxd</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nhurj5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0z7plws">
+      <bpmn:incoming>Flow_0j1vjy4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0j1vjy4" sourceRef="Activity_1w018et" targetRef="Event_0z7plws" />
+    <bpmn:userTask id="Activity_0lgtccq" name="Firmar Documentación" camunda:assignee="demo" camunda:candidateGroups="comiteolimpiconacional">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="nombre1" type="string" />
+          <camunda:formField id="DNI1" type="long" />
+          <camunda:formField id="conformidad1" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1nhurj5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rwnb9a</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_12xhuph" name="Firmar Documentación" camunda:assignee="demo" camunda:candidateGroups="ciudadcandidata">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="nombre2" type="string" />
+          <camunda:formField id="DNI2" type="long" />
+          <camunda:formField id="conformidad2" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0rwnb9a</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j2395b</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1nhurj5" sourceRef="Activity_0mrwle5" targetRef="Activity_0lgtccq" />
+    <bpmn:sequenceFlow id="Flow_0rwnb9a" sourceRef="Activity_0lgtccq" targetRef="Activity_12xhuph" />
+    <bpmn:sequenceFlow id="Flow_0j2395b" sourceRef="Activity_12xhuph" targetRef="Activity_1w018et" />
+    <bpmn:manualTask id="Activity_0h4arwx" name="Enviar Documento">
       <bpmn:incoming>Flow_1l3dc4e</bpmn:incoming>
       <bpmn:outgoing>Flow_1rygpxd</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_1rygpxd" sourceRef="Activity_0h4arwx" targetRef="Activity_0mrwle5" />
-    <bpmn:userTask id="Activity_0mrwle5" name="Firmar Documentación">
-      <bpmn:incoming>Flow_1rygpxd</bpmn:incoming>
-      <bpmn:outgoing>Flow_17iik57</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_17iik57" sourceRef="Activity_0mrwle5" targetRef="Activity_083e06y" />
-    <bpmn:userTask id="Activity_083e06y" name="Firmar Documentación">
-      <bpmn:incoming>Flow_17iik57</bpmn:incoming>
-      <bpmn:outgoing>Flow_01zeq2u</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_01zeq2u" sourceRef="Activity_083e06y" targetRef="Activity_0sg1xcs" />
-    <bpmn:userTask id="Activity_0sg1xcs" name="Firmar Documentación">
-      <bpmn:incoming>Flow_01zeq2u</bpmn:incoming>
-    </bpmn:userTask>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="Activity_1w018et" name="Enviar Documentación firmada al completo">
+      <bpmn:incoming>Flow_0j2395b</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j1vjy4</bpmn:outgoing>
+    </bpmn:manualTask>
   </bpmn:process>
+  <bpmn:message id="Message_0q8luw9" name="procedimiento candidatura enviado" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_08aj1l4">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="firma-proc-cand">
       <bpmndi:BPMNEdge id="Flow_0pkf1ra_di" bpmnElement="Flow_0pkf1ra">
         <di:waypoint x="215" y="177" />
         <di:waypoint x="270" y="177" />
@@ -78,13 +110,21 @@
         <di:waypoint x="630" y="100" />
         <di:waypoint x="690" y="100" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17iik57_di" bpmnElement="Flow_17iik57">
-        <di:waypoint x="790" y="100" />
-        <di:waypoint x="850" y="100" />
+      <bpmndi:BPMNEdge id="Flow_0j1vjy4_di" bpmnElement="Flow_0j1vjy4">
+        <di:waypoint x="1270" y="100" />
+        <di:waypoint x="1332" y="100" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_01zeq2u_di" bpmnElement="Flow_01zeq2u">
-        <di:waypoint x="950" y="100" />
-        <di:waypoint x="1010" y="100" />
+      <bpmndi:BPMNEdge id="Flow_1nhurj5_di" bpmnElement="Flow_1nhurj5">
+        <di:waypoint x="790" y="100" />
+        <di:waypoint x="830" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rwnb9a_di" bpmnElement="Flow_0rwnb9a">
+        <di:waypoint x="930" y="100" />
+        <di:waypoint x="980" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j2395b_di" bpmnElement="Flow_0j2395b">
+        <di:waypoint x="1080" y="100" />
+        <di:waypoint x="1170" y="100" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_16zk0fu_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
@@ -107,17 +147,23 @@
           <dc:Bounds x="520" y="275" width="61" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_09jvzps_di" bpmnElement="Activity_0h4arwx">
-        <dc:Bounds x="530" y="60" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_19nlg2l_di" bpmnElement="Activity_0mrwle5">
         <dc:Bounds x="690" y="60" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_12fyn4s_di" bpmnElement="Activity_083e06y">
-        <dc:Bounds x="850" y="60" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_0z7plws_di" bpmnElement="Event_0z7plws">
+        <dc:Bounds x="1332" y="82" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0grt0g4_di" bpmnElement="Activity_0sg1xcs">
-        <dc:Bounds x="1010" y="60" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0lgtccq_di" bpmnElement="Activity_0lgtccq">
+        <dc:Bounds x="830" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12xhuph_di" bpmnElement="Activity_12xhuph">
+        <dc:Bounds x="980" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1am4x48_di" bpmnElement="Activity_0h4arwx">
+        <dc:Bounds x="530" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lb3vgg_di" bpmnElement="Activity_1w018et">
+        <dc:Bounds x="1170" y="60" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

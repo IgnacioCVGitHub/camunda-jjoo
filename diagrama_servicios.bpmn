@@ -20,10 +20,15 @@
       <bpmn:outgoing>Flow_1jj4rp5</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1jj4rp5" sourceRef="Activity_1bxrx68" targetRef="Activity_1jgxozj" />
-    <bpmn:userTask id="Activity_1jgxozj" name="Organizar cita con Ciudad Candidata">
+    <bpmn:userTask id="Activity_1jgxozj" name="Organizar cita con Ciudad Candidata" camunda:assignee="demo" camunda:candidateGroups="comiteolimpicointernacional">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="fecha-cita" type="string" />
+          <camunda:formField id="fecha-cita" label="Fecha de la cita acordada" type="string">
+            <camunda:validation>
+              <camunda:constraint name="minlength" config="5" />
+              <camunda:constraint name="maxlength" config="8" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1jj4rp5</bpmn:incoming>
@@ -35,7 +40,7 @@
       <bpmn:outgoing>Flow_0oefdjd</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_0oefdjd" sourceRef="Activity_04hu9nj" targetRef="Activity_0z4lfk6" />
-    <bpmn:userTask id="Activity_0z4lfk6" name="Evaluar Candidatura">
+    <bpmn:userTask id="Activity_0z4lfk6" name="Evaluar Candidatura" camunda:assignee="demo" camunda:candidateGroups="comiteolimpicointernacional">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="aceptable" label="Candidatura aceptable" type="boolean" />

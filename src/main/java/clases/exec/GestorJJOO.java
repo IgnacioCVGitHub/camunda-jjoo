@@ -72,12 +72,66 @@ public class GestorJJOO {
         	List rules = Arrays.asList(new CharacterRule(EnglishCharacterData.UpperCase, 1),
     				new CharacterRule(EnglishCharacterData.LowerCase, 1), new CharacterRule(EnglishCharacterData.Digit, 1),new CharacterRule(EnglishCharacterData.Special, 1));
         	
-        	LOGGER.info("generando contraseña para el usuario" + user +" ...");
+        	LOGGER.info("generando contraseña para el usuario " + user +" ...");
 
     		PasswordGenerator generator = new PasswordGenerator();
         	String passwd= generator.generatePassword(8, rules);
         	
         	LOGGER.info("contraseña generada: " + user +" - "+passwd);
+        	externalTaskService.complete(externalTask);
+        })
+        .open();
+	    
+	    client.subscribe("notify-date")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+          // Put your business logic here
+        	
+          // Get a process variable
+        	SendMail sendMail = new SendMail();
+        	String mail= (String) externalTask.getVariable("mail");
+        	String user = (String) externalTask.getVariable("user");
+        	String fecha = (String) externalTask.getVariable("fecha-cita");
+            String asunto =  "Fecha de cita de reunión";
+            String cuerpo = "Estimado :   "
+            		+ "\n\n Se le comunica que su cita con el COI se ha organizado para el "
+            		+ fecha
+            		+ "\nUn saludo."; 
+
+	          try {
+				sendMail.sendMail(mail, user, asunto, cuerpo);
+			} catch (Exception e) {
+				LOGGER.warning("Correo no enviado. Error");
+			}   
+
+          // Complete the task
+          externalTaskService.complete(externalTask);
+        })
+        .open();
+	    
+	    client.subscribe("notify-cand")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+          // Put your business logic here
+        	
+          // Get a process variable
+        	SendMail sendMail = new SendMail();
+        	String mail= (String) externalTask.getVariable("mail");
+        	String user = (String) externalTask.getVariable("user");
+            String asunto =  "Comunicado de candidatura";
+            String cuerpo = "Estimado :   "
+            		+ "\n\n Se le comunica que su candidatura ha sido evaluda como Positiva y puede"
+            		+ " continuar en el proceso de selección."
+            		+ "\n\nUn saludo."; 
+
+	          try {
+				sendMail.sendMail(mail, user, asunto, cuerpo);
+			} catch (Exception e) {
+				LOGGER.warning("Correo no enviado. Error");
+			}   
+
+          // Complete the task
+          externalTaskService.complete(externalTask);
         })
         .open();
 	    
