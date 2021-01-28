@@ -9,9 +9,9 @@
     </bpmn:sequenceFlow>
     <bpmn:startEvent id="StartEvent_1" name="Recibo de emblema">
       <bpmn:outgoing>Flow_1vfzvb4</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_02yp9uq" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_02yp9uq" messageRef="Message_0gs065y" />
     </bpmn:startEvent>
-    <bpmn:userTask id="evaluar_emblema" name="Evaluar emblema" camunda:formKey="f001" camunda:assignee="demo" camunda:candidateUsers="demo, comiteolimpicointernacional">
+    <bpmn:userTask id="evaluar_emblema" name="Evaluar emblema" camunda:assignee="demo" camunda:candidateUsers="demo, comiteolimpicointernacional">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="form_ev_emblema" label="Requisitos" type="boolean" />
@@ -47,6 +47,7 @@
       <bpmn:incoming>Flow_1rs95hh</bpmn:incoming>
     </bpmn:endEvent>
   </bpmn:process>
+  <bpmn:message id="Message_0gs065y" name="Message_289s3sk" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1telwmy">
       <bpmndi:BPMNShape id="Participant_1hdi427_di" bpmnElement="coi" isHorizontal="true">

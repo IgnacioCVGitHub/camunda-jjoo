@@ -6,13 +6,13 @@
   <bpmn:process id="Process_1yxobg9" name="resolucion_emblema" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0tiuf0q</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1r355o9" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1r355o9" messageRef="Message_1v6sacq" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0tiuf0q" sourceRef="StartEvent_1" targetRef="clasif_mensaje" />
     <bpmn:userTask id="clasif_mensaje" name="Clasificar mensaje recibido" camunda:assignee="demo" camunda:candidateUsers="demo,ciudadcandidata">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="aceptación_emblema" label="¿Aceptada?" type="boolean" />
+          <camunda:formField id="aceptacion_emblema" label="Aceptada?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0tiuf0q</bpmn:incoming>
@@ -25,13 +25,13 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_029vh0b" sourceRef="clasif_mensaje" targetRef="Gateway_1atybtc" />
     <bpmn:sequenceFlow id="Flow_0w1tthy" name="Si" sourceRef="Gateway_1atybtc" targetRef="publicar_emblema">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aceptación_emblema}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aceptacion_emblema}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_01fysxz" name="Fin">
       <bpmn:incoming>Flow_17ompn0</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_17ompn0" name="No" sourceRef="Gateway_1atybtc" targetRef="Event_01fysxz">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!aceptación_emblema}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!aceptacion_emblema}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1erssne" name="Emblema creado y publicado con éxito">
       <bpmn:incoming>Flow_0saa7kk</bpmn:incoming>
@@ -42,6 +42,7 @@
       <bpmn:outgoing>Flow_0saa7kk</bpmn:outgoing>
     </bpmn:serviceTask>
   </bpmn:process>
+  <bpmn:message id="Message_1v6sacq" name="Message_1v40q25" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_15ocuwi">
       <bpmndi:BPMNShape id="Participant_0xqld86_di" bpmnElement="ciudad_candidata" isHorizontal="true">
