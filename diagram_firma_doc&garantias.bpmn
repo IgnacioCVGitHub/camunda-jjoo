@@ -43,7 +43,7 @@
               <camunda:constraint name="minlength" config="3" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="datos_aportados" label="datos_aportados" type="string" />
+          <camunda:formField id="datos_aportados" label="Aportación de datos" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1rqjog0</bpmn:incoming>
