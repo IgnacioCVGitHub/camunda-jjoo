@@ -33,6 +33,31 @@ public class GestorJJOO {
 	          externalTaskService.complete(externalTask);
 	        })
 	        .open();
+	    
+	    client.subscribe("send-docs")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+          // Put your business logic here
+        	
+          // Get a process variable
+        	SendMail sendMail = new SendMail();
+        	String mail= (String) externalTask.getVariable("mail");
+        	String user = (String) externalTask.getVariable("user");
+            String asunto =  "Enlace a documentación";
+            String cuerpo = "Estimado candidato:   \n\n Se le facilitará a continuación un enlace "
+            		+ "a la documentación generada hasta el momento:\n"
+            		+ "https://drive.google.com/drive/folders/0B1qoi1IlEKwaM2tSMFBmOGUyNzg"; 
+
+	          try {
+				sendMail.sendMail(mail, user, asunto, cuerpo);
+			} catch (Exception e) {
+				LOGGER.warning("Correo no enviado. Error");
+			}   
+
+          // Complete the task
+          externalTaskService.complete(externalTask);
+        })
+        .open();
 	    	
 	  }
 }
