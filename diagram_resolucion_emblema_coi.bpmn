@@ -9,10 +9,10 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_1r355o9" messageRef="Message_1v6sacq" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0tiuf0q" sourceRef="StartEvent_1" targetRef="clasif_mensaje" />
-    <bpmn:userTask id="clasif_mensaje" name="Clasificar mensaje recibido" camunda:assignee="demo" camunda:candidateUsers="demo,ciudadcandidata">
+    <bpmn:userTask id="clasif_mensaje" name="Clasificar mensaje recibido" camunda:assignee="demo" camunda:candidateUsers="demo" camunda:candidateGroups="ciudadcandidata">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="aceptacion_emblema" label="Aceptada?" type="boolean" />
+          <camunda:formField id="aceptacion_emblema" label="¿Aceptada?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0tiuf0q</bpmn:incoming>
@@ -42,7 +42,7 @@
       <bpmn:outgoing>Flow_0saa7kk</bpmn:outgoing>
     </bpmn:serviceTask>
   </bpmn:process>
-  <bpmn:message id="Message_1v6sacq" name="Message_1v40q25" />
+  <bpmn:message id="Message_1v6sacq" name="Decisión del COI" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_15ocuwi">
       <bpmndi:BPMNShape id="Participant_0xqld86_di" bpmnElement="ciudad_candidata" isHorizontal="true">

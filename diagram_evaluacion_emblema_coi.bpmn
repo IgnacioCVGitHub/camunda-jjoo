@@ -11,10 +11,10 @@
       <bpmn:outgoing>Flow_1vfzvb4</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_02yp9uq" messageRef="Message_0gs065y" />
     </bpmn:startEvent>
-    <bpmn:userTask id="evaluar_emblema" name="Evaluar emblema" camunda:assignee="demo" camunda:candidateUsers="demo, comiteolimpicointernacional">
+    <bpmn:userTask id="evaluar_emblema" name="Evaluar emblema" camunda:assignee="demo" camunda:candidateGroups="comiteolimpicointernacional">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="form_ev_emblema" label="Requisitos" type="boolean" />
+          <camunda:formField id="Requisitos" label="¿Cumple los requisitos?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1vfzvb4</bpmn:incoming>
