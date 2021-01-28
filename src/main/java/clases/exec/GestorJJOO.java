@@ -80,5 +80,105 @@ public class GestorJJOO {
         	LOGGER.info("contraseña generada: " + user +" - "+passwd);
         })
         .open();
+	    
+	    client.subscribe("envio_emblema_coi")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+          // Put your business logic here
+        	
+          // Get a process variable
+        	SendMail sendMail = new SendMail();
+        	String mail= (String) externalTask.getVariable("mail");
+        	String user = (String) externalTask.getVariable("user");
+            String asunto =  "Enlace al emblema desarrollado";
+            String cuerpo = "Estimado Comité Olimpico Internacional:   \n\n Se le facilitará a continuación un enlace "
+            		+ "al emblema el cual esperemos sea de su agrado:\n"
+            		+ "https://drive.google.com/drive/folders/0B1qoi1IlEKwaM2tSMFBmOGUyNzg"; 
+
+	          try {
+				sendMail.sendMail(mail, user, asunto, cuerpo);
+			} catch (Exception e) {
+				LOGGER.warning("Correo no enviado. Error");
+			}   
+
+          // Complete the task
+          externalTaskService.complete(externalTask);
+        })
+        .open();
+
+client.subscribe("envio_doc_firmada_garantías")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+          // Put your business logic here
+        	
+          // Get a process variable
+        	SendMail sendMail = new SendMail();
+        	String mail= (String) externalTask.getVariable("mail");
+        	String user = (String) externalTask.getVariable("user");
+            String asunto =  "Enlace a la documentación firmada y garantías";
+            String cuerpo = "Estimado Comité Olimpico Internacional:   \n\n Se le facilitará a continuación un enlace "
+            		+ "a la documentación requerida junto a las garantías necesarias:\n"
+            		+ "https://drive.google.com/drive/folders/0B1qoi1IlEKwaM2tSMFBmOGUyNzg"; 
+
+	          try {
+				sendMail.sendMail(mail, user, asunto, cuerpo);
+			} catch (Exception e) {
+				LOGGER.warning("Correo no enviado. Error");
+			}   
+
+          // Complete the task
+          externalTaskService.complete(externalTask);
+        })
+        .open();
+
+client.subscribe("notificacion_evaluacion_negativa")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+          // Put your business logic here
+        	
+          // Get a process variable
+        	SendMail sendMail = new SendMail();
+        	String mail= (String) externalTask.getVariable("mail");
+        	String user = (String) externalTask.getVariable("user");
+            String asunto =  "Evaluación negativa emblema";
+            String cuerpo = "Estimado Comité Olimpico Nacional:   \n\n Se le comunica que el emblema generado no cumple con lso estándares requeridos "
+            		+ "por la organización.\n"
+            		+ "Por favor realicen de nuevo el emblema."; 
+
+	          try {
+				sendMail.sendMail(mail, user, asunto, cuerpo);
+			} catch (Exception e) {
+				LOGGER.warning("Correo no enviado. Error");
+			}   
+
+          // Complete the task
+          externalTaskService.complete(externalTask);
+        })
+        .open();
+
+client.subscribe("notificacion_evaluacion_positiva")
+        .lockDuration(1000) // the default lock duration is 20 seconds, but you can override this
+        .handler((externalTask, externalTaskService) -> {
+          // Put your business logic here
+        	
+          // Get a process variable
+        	SendMail sendMail = new SendMail();
+        	String mail= (String) externalTask.getVariable("mail");
+        	String user = (String) externalTask.getVariable("user");
+            String asunto =  "Evaluación positiva del emblema";
+            String cuerpo = "Estimado Comité Olimpico Nacional:   \n\n Se le comunica que el emblema generado cumple con los estándares requeridos "
+            		+ "por la organización.\n"
+            		+ "Un saludo."; 
+
+	          try {
+				sendMail.sendMail(mail, user, asunto, cuerpo);
+			} catch (Exception e) {
+				LOGGER.warning("Correo no enviado. Error");
+			}   
+
+          // Complete the task
+          externalTaskService.complete(externalTask);
+        })
+        .open();
 	  }
 }
