@@ -52,9 +52,19 @@
     <bpmn:userTask id="Activity_12xhuph" name="Firmar Documentación" camunda:assignee="demo" camunda:candidateGroups="ciudadcandidata">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="nombre2" type="string" />
-          <camunda:formField id="DNI2" type="long" />
-          <camunda:formField id="conformidad2" type="boolean" />
+          <camunda:formField id="nombre2" label="Nombre" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="DNI2" label="DNI con o sin letra" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="minlength" config="8" />
+              <camunda:constraint name="maxlength" config="9" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="conformidad2" label="¿Está conforme?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0rwnb9a</bpmn:incoming>
@@ -70,9 +80,19 @@
     <bpmn:userTask id="Activity_0mrwle5" name="Firmar Documentación" camunda:assignee="demo" camunda:candidateGroups="comitepujas">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="nombre" type="string" />
-          <camunda:formField id="DNI" type="long" />
-          <camunda:formField id="conformidad" type="boolean" />
+          <camunda:formField id="nombre" label="Nombre" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="DNI" label="DNI con o sin letra" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="maxlength" config="9" />
+              <camunda:constraint name="minlength" config="8" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="conformidad" label="¿Está conforme?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1rygpxd</bpmn:incoming>
@@ -81,9 +101,15 @@
     <bpmn:userTask id="Activity_0lgtccq" name="Firmar Documentación" camunda:assignee="demo" camunda:candidateGroups="comiteolimpiconacional">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="nombre1" type="string" />
-          <camunda:formField id="DNI1" type="long" />
-          <camunda:formField id="conformidad1" type="boolean" />
+          <camunda:formField id="nombre1" label="Nombre:" type="string" />
+          <camunda:formField id="DNI1" label="DNI con o sin letra" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="maxlength" config="9" />
+              <camunda:constraint name="minlength" config="8" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="conformidad1" label="¿Está conforme?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1nhurj5</bpmn:incoming>
@@ -106,45 +132,22 @@
       <bpmndi:BPMNShape id="Participant_1dsfigi_di" bpmnElement="Participant_1dsfigi" isHorizontal="true">
         <dc:Bounds x="129" y="80" width="1260" height="540" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1yfnnc9_di" bpmnElement="Lane_1yfnnc9" isHorizontal="true">
-        <dc:Bounds x="159" y="80" width="1230" height="160" />
+      <bpmndi:BPMNShape id="Lane_03it0mb_di" bpmnElement="Lane_03it0mb" isHorizontal="true">
+        <dc:Bounds x="159" y="380" width="1230" height="240" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_17nhwio_di" bpmnElement="Lane_17nhwio" isHorizontal="true">
         <dc:Bounds x="159" y="240" width="1230" height="140" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_03it0mb_di" bpmnElement="Lane_03it0mb" isHorizontal="true">
-        <dc:Bounds x="159" y="380" width="1230" height="240" />
+      <bpmndi:BPMNShape id="Lane_1yfnnc9_di" bpmnElement="Lane_1yfnnc9" isHorizontal="true">
+        <dc:Bounds x="159" y="80" width="1230" height="160" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0j2395b_di" bpmnElement="Flow_0j2395b">
-        <di:waypoint x="1030" y="450" />
-        <di:waypoint x="1140" y="450" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rwnb9a_di" bpmnElement="Flow_0rwnb9a">
-        <di:waypoint x="920" y="170" />
-        <di:waypoint x="980" y="170" />
-        <di:waypoint x="980" y="410" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1nhurj5_di" bpmnElement="Flow_1nhurj5">
-        <di:waypoint x="750" y="280" />
-        <di:waypoint x="750" y="170" />
-        <di:waypoint x="820" y="170" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0j1vjy4_di" bpmnElement="Flow_0j1vjy4">
-        <di:waypoint x="1240" y="450" />
-        <di:waypoint x="1312" y="450" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1rygpxd_di" bpmnElement="Flow_1rygpxd">
-        <di:waypoint x="650" y="410" />
-        <di:waypoint x="650" y="320" />
-        <di:waypoint x="700" y="320" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pkf1ra_di" bpmnElement="Flow_0pkf1ra">
-        <di:waypoint x="235" y="500" />
-        <di:waypoint x="310" y="500" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0u0twv5_di" bpmnElement="Flow_0u0twv5">
-        <di:waypoint x="410" y="500" />
-        <di:waypoint x="455" y="500" />
+      <bpmndi:BPMNEdge id="Flow_1l3dc4e_di" bpmnElement="Flow_1l3dc4e">
+        <di:waypoint x="480" y="475" />
+        <di:waypoint x="480" y="450" />
+        <di:waypoint x="600" y="450" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="490" y="457" width="11" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1x5w6ro_di" bpmnElement="Flow_1x5w6ro">
         <di:waypoint x="480" y="525" />
@@ -154,13 +157,36 @@
           <dc:Bounds x="488" y="528" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1l3dc4e_di" bpmnElement="Flow_1l3dc4e">
-        <di:waypoint x="480" y="475" />
-        <di:waypoint x="480" y="450" />
-        <di:waypoint x="600" y="450" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="490" y="457" width="11" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="Flow_0u0twv5_di" bpmnElement="Flow_0u0twv5">
+        <di:waypoint x="410" y="500" />
+        <di:waypoint x="455" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pkf1ra_di" bpmnElement="Flow_0pkf1ra">
+        <di:waypoint x="235" y="500" />
+        <di:waypoint x="310" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rygpxd_di" bpmnElement="Flow_1rygpxd">
+        <di:waypoint x="650" y="410" />
+        <di:waypoint x="650" y="320" />
+        <di:waypoint x="700" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j1vjy4_di" bpmnElement="Flow_0j1vjy4">
+        <di:waypoint x="1240" y="450" />
+        <di:waypoint x="1312" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nhurj5_di" bpmnElement="Flow_1nhurj5">
+        <di:waypoint x="750" y="280" />
+        <di:waypoint x="750" y="170" />
+        <di:waypoint x="820" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rwnb9a_di" bpmnElement="Flow_0rwnb9a">
+        <di:waypoint x="920" y="170" />
+        <di:waypoint x="980" y="170" />
+        <di:waypoint x="980" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j2395b_di" bpmnElement="Flow_0j2395b">
+        <di:waypoint x="1030" y="450" />
+        <di:waypoint x="1140" y="450" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_16zk0fu_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="199" y="482" width="36" height="36" />
